@@ -15,7 +15,7 @@ use Composer\Installer\LibraryInstaller;
 
 class Installer extends LibraryInstaller {
 	public function getInstallPath(PackageInterface $package) {
-		return 'sally/addons/'.str_replace('/', '-', $package->getName());
+		return 'sally/addons/'.$package->getName();
 	}
 
 	public function supports($packageType) {
