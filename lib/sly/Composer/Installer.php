@@ -15,10 +15,18 @@ use Composer\Installer\LibraryInstaller;
 
 class Installer extends LibraryInstaller {
 	public function getInstallPath(PackageInterface $package) {
-		return 'sally/addons/'.$package->getName();
+		switch ($package->getType()) {
+			case 'sallycms-addon':
+				$path = 'sally/addons/'.$package->getName();
+				break;
+			case 'sallycms-asset':
+				$path = 'sally/assets/'.$package->getName();
+		}
+		return $path;
 	}
 
 	public function supports($packageType) {
-		return 'sallycms-addon' === $packageType;
+		$supported = array('sallycms-addon', 'sallycms-asset');
+		return in_array($packageType, $supported);
 	}
 }
