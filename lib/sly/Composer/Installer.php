@@ -19,14 +19,21 @@ class Installer extends LibraryInstaller {
 			case 'sallycms-addon':
 				$path = 'sally/addons/'.$package->getName();
 				break;
+
 			case 'sallycms-asset':
 				$path = 'sally/assets/'.$package->getName();
+				break;
+
+			case 'sallycms-app':
+				$parts = explode('/', $package->getName());
+				$path  = 'sally/'.end($parts);
 		}
+
 		return $path;
 	}
 
 	public function supports($packageType) {
-		$supported = array('sallycms-addon', 'sallycms-asset');
+		$supported = array('sallycms-addon', 'sallycms-asset', 'sallycms-app');
 		return in_array($packageType, $supported);
 	}
 }
