@@ -1,11 +1,14 @@
 {
-	"name": "sallycms/composer-installer",
-	"type": "composer-installer",
-	"license": "MIT",
-	"autoload": {
-		"psr-0": {"sly\\Composer": "lib/"}
-	},
-	"extra": {
-		"class": "sly\\Composer\\Installer"
-	}
+    "name": "sallycms/composer-installer",
+    "type": "composer-installer",
+    "license": "MIT",
+    "autoload": {
+        "psr-0": {"sly\\Composer": "lib/"}
+    },
+    "extra": {
+        "class": "sly\\Composer\\Installer",
+        "branch-alias": {
+            "dev-default": "1.x-dev"
+        }
+    }
 }
