@@ -3,7 +3,9 @@
     "type": "composer-installer",
     "license": "MIT",
     "autoload": {
-        "psr-0": {"sly\\Composer": "lib/"}
+        "psr-0": {
+        		"sly\\Composer": "lib/"
+        	}
     },
     "extra": {
         "class": "sly\\Composer\\Installer",
