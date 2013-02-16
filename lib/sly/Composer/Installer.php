@@ -22,18 +22,20 @@ class Installer extends LibraryInstaller {
 	}
 
 	protected static function getPkgPath(PackageInterface $package) {
+		$base = getcwd();
+
 		switch ($package->getType()) {
 			case 'sallycms-addon':
-				$path = 'sally/addons/'.$package->getName();
+				$path = $base.'/sally/addons/'.$package->getName();
 				break;
 
 			case 'sallycms-asset':
-				$path = 'sally/assets/'.$package->getName();
+				$path = $base.'/sally/assets/'.$package->getName();
 				break;
 
 			case 'sallycms-app':
 				$parts = explode('/', $package->getName());
-				$path  = 'sally/'.end($parts);
+				$path  = $base.'/sally/'.end($parts);
 		}
 
 		return $path;
