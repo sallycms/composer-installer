@@ -61,8 +61,7 @@ class Installer extends LibraryInstaller {
 
 		if (is_dir($srcDir)) {
 			$io = $event->getIO();
-			$io->write('');
-			$io->write('  - Updating assets...', false);
+			$io->write('    Updating assets...', false);
 
 			Helper::deleteFiles($dstDir, true);
 			Helper::copyTo($srcDir, $dstDir);
@@ -70,7 +69,7 @@ class Installer extends LibraryInstaller {
 			$io->write(' done.');
 
 			// remove affected asset-cache directories
-			$io->write('  - Wiping asset cache...', false);
+			$io->write('    Wiping asset cache...', false);
 
 			$patterns = array(
 				'public/gzip',    'public/plain',    'public/deflate',
@@ -83,6 +82,7 @@ class Installer extends LibraryInstaller {
 			}
 
 			$io->write(' done.');
+			$io->write('');
 		}
 	}
 }
