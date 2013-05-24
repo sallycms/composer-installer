@@ -187,7 +187,7 @@ class Helper {
 	 * @param  string $destination
 	 * @return boolean
 	 */
-	public static function copyTo($source, $destination) {
+	public static function copyTo($source, $destination, $overwrite = true) {
 		if (!is_dir($source)) return false;
 
 		$destination = self::createDirectory($destination);
@@ -206,7 +206,7 @@ class Helper {
 				$recursion = self::copyTo($src, $dst);
 				if ($recursion === false) return false;
 			}
-			elseif (is_file($src)) {
+			elseif (is_file($src) && (!file_exists($dst) || $overwrite)) {
 				if (copy($src, $dst)) chmod($dst, 0664);
 				else return false;
 			}
