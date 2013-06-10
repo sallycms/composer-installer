@@ -203,7 +203,7 @@ class Helper {
 				$dst = self::createDirectory($dst);
 				if ($dst === false) return false;
 
-				$recursion = self::copyTo($src, $dst);
+				$recursion = self::copyTo($src, $dst, $overwrite);
 				if ($recursion === false) return false;
 			}
 			elseif (is_file($src) && (!file_exists($dst) || $overwrite)) {
