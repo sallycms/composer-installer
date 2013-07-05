@@ -82,5 +82,19 @@ class Installer extends LibraryInstaller {
 			$io->write(' done.');
 			$io->write('');
 		}
+
+		if ($pkg->getType() === 'sallycms-addon') {
+			$srcDir = $pkgDir.'/develop';
+			$dstDir = 'develop';
+
+			if (is_dir($srcDir)) {
+				$io = $event->getIO();
+				$io->write('    Installing develop files...', false);
+
+				Helper::copyTo($srcDir, $dstDir, false);
+
+				$io->write(' done.');
+			}
+		}
 	}
 }
