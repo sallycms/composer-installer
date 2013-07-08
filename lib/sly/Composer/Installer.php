@@ -52,35 +52,41 @@ class Installer extends LibraryInstaller {
 			return;
 		}
 
-		$name   = $pkg->getName();
-		$pkgDir = self::getPkgPath($pkg);
-		$srcDir = $pkgDir.'/assets';
-		$dstDir = 'data/dyn/public/'.$name;
+		// re-initializing assets is only required for <0.9 systems
 
-		if (is_dir($srcDir)) {
-			$io = $event->getIO();
-			$io->write('    Updating assets...', false);
+		$rootVersion = $event->getComposer()->getPackage()->getVersion();
 
-			Helper::deleteFiles($dstDir, true);
-			Helper::copyTo($srcDir, $dstDir);
+		if (version_compare($rootVersion, '0.9.0', '<')) {
+			$name   = $pkg->getName();
+			$pkgDir = self::getPkgPath($pkg);
+			$srcDir = $pkgDir.'/assets';
+			$dstDir = 'data/dyn/public/'.$name;
 
-			$io->write(' done.');
+			if (is_dir($srcDir)) {
+				$io = $event->getIO();
+				$io->write('    Updating assets...', false);
 
-			// remove affected asset-cache directories
-			$io->write('    Wiping asset cache...', false);
+				Helper::deleteFiles($dstDir, true);
+				Helper::copyTo($srcDir, $dstDir);
 
-			$patterns = array(
-				'public/gzip',    'public/plain',    'public/deflate',
-				'protected/gzip', 'protected/plain', 'protected/deflate',
-			);
+				$io->write(' done.');
 
-			foreach ($patterns as $pattern) {
-				$cacheDir = "data/dyn/public/sally/static-cache/$pattern/$dstDir";
-				Helper::deleteFiles($cacheDir, true);
+				// remove affected asset-cache directories
+				$io->write('    Wiping asset cache...', false);
+
+				$patterns = array(
+					'public/gzip',    'public/plain',    'public/deflate',
+					'protected/gzip', 'protected/plain', 'protected/deflate',
+				);
+
+				foreach ($patterns as $pattern) {
+					$cacheDir = "data/dyn/public/sally/static-cache/$pattern/$dstDir";
+					Helper::deleteFiles($cacheDir, true);
+				}
+
+				$io->write(' done.');
+				$io->write('');
 			}
-
-			$io->write(' done.');
-			$io->write('');
 		}
 
 		if ($pkg->getType() === 'sallycms-addon') {
