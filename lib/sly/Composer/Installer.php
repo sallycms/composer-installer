@@ -52,13 +52,14 @@ class Installer extends LibraryInstaller {
 			return;
 		}
 
+		$pkgDir = self::getPkgPath($pkg);
+
 		// re-initializing assets is only required for <0.9 systems
 
 		$rootVersion = $event->getComposer()->getPackage()->getVersion();
 
 		if (version_compare($rootVersion, '0.9.0', '<')) {
 			$name   = $pkg->getName();
-			$pkgDir = self::getPkgPath($pkg);
 			$srcDir = $pkgDir.'/assets';
 			$dstDir = 'data/dyn/public/'.$name;
 
