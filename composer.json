@@ -7,6 +7,9 @@
             "sly\\Composer": "lib/"
         }
     },
+    "require": {
+        "composer-plugin-api": "~1.0"
+    },
     "extra": {
         "class": "sly\\Composer\\Plugin",
         "branch-alias": {
