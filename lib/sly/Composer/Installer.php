@@ -17,30 +17,24 @@ use Composer\Script\Event;
 class Installer extends LibraryInstaller {
 	public static $supported = array('sallycms-addon', 'sallycms-asset', 'sallycms-app');
 
-	public function getInstallPath(PackageInterface $package) {
-		return self::getPkgPath($package);
-	}
-
-	protected static function getPkgPath(PackageInterface $package) {
-		switch ($package->getType()) {
-			case 'sallycms-addon':
-				$path = 'sally/addons/'.$package->getName();
-				break;
-
-			case 'sallycms-asset':
-				$path = 'sally/assets/'.$package->getName();
-				break;
-
-			case 'sallycms-app':
-				$parts = explode('/', $package->getName());
-				$path  = 'sally/'.end($parts);
-		}
-
-		return $path;
-	}
-
+	/**
+	 * Decides if the installer supports the given type
+	 *
+	 * @param  string $packageType
+	 * @return bool
+	 */
 	public function supports($packageType) {
 		return in_array($packageType, self::$supported);
+	}
+
+	/**
+	 * Returns the installation path of a package
+	 *
+	 * @param  PackageInterface $package
+	 * @return string           path
+	 */
+	public function getInstallPath(PackageInterface $package) {
+		return self::getPkgPath($package);
 	}
 
 	public static function onPostPkgInstall(Event $event) {
@@ -103,5 +97,23 @@ class Installer extends LibraryInstaller {
 				$io->write(' done.');
 			}
 		}
+	}
+
+	protected static function getPkgPath(PackageInterface $package) {
+		switch ($package->getType()) {
+			case 'sallycms-addon':
+				$path = 'sally/addons/'.$package->getName();
+				break;
+
+			case 'sallycms-asset':
+				$path = 'sally/assets/'.$package->getName();
+				break;
+
+			case 'sallycms-app':
+				$parts = explode('/', $package->getName());
+				$path  = 'sally/'.end($parts);
+		}
+
+		return $path;
 	}
 }
