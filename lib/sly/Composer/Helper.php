@@ -10,6 +10,9 @@
 
 namespace sly\Composer;
 
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 class Helper {
 	/**
 	 * @param  string $path
@@ -94,8 +97,8 @@ class Helper {
 		if (!is_dir($dir)) return false;
 
 		// use the realpath of the directory to normalize the filenames
-		$iterator = new \RecursiveDirectoryIterator(realpath($dir));
-		$iterator = new \RecursiveIteratorIterator($iterator);
+		$iterator = new RecursiveDirectoryIterator(realpath($dir));
+		$iterator = new RecursiveIteratorIterator($iterator);
 		$list     = array();
 		$baselen  = strlen(rtrim(realpath($dir), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR);
 
@@ -150,8 +153,8 @@ class Helper {
 
 			if ($recursive) {
 				// don't use listRecursive() because CHILD_FIRST matters
-				$iterator = new \RecursiveDirectoryIterator($dir);
-				$iterator = new \RecursiveIteratorIterator($iterator, \RecursiveIteratorIterator::CHILD_FIRST);
+				$iterator = new RecursiveDirectoryIterator($dir);
+				$iterator = new RecursiveIteratorIterator($iterator, RecursiveIteratorIterator::CHILD_FIRST);
 
 				foreach ($iterator as $file) {
 					if ($file->isDir()) {
