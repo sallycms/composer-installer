@@ -88,7 +88,11 @@ class Installer extends LibraryInstaller {
 			$srcDir = $pkgDir.'/develop';
 			$dstDir = 'develop';
 
-			if (is_dir($srcDir)) {
+			$extra = $event->getComposer()->getPackage()->getExtra();
+			$sallycms = is_array($extra) && array_key_exists('sallycms', $extra) && is_array($extra['sallycms']) ? $extra['sallycms'] : array();
+			$installDevelopFiles = array_key_exists('install-develop-files', $sallycms) ? $sallycms['install-develop-files'] : true;
+
+			if (is_dir($srcDir) && $installDevelopFiles) {
 				$io = $event->getIO();
 				$io->write('    Installing develop files...', false);
 
