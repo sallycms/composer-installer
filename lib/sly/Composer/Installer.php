@@ -37,6 +37,25 @@ class Installer extends LibraryInstaller {
 		return self::getPkgPath($package);
 	}
 
+	/**
+	 * Make sure the sally/ directory is protected against HTTP access in Sally 0.9+
+	 */
+	public static function onPostInstall(Event $event) {
+		$rootVersion = $event->getComposer()->getPackage()->getVersion();
+
+		if (version_compare($rootVersion, '0.9.0', '>=')) {
+			$htaccess = 'sally/.htaccess';
+			$content  = "order deny,allow\ndeny from all";
+
+			if (!file_exists($htaccess)) {
+				$io = $event->getIO();
+				$io->write('<info>Securing sally/ against HTTP access</info>', false);
+				$io->write(' <warning>(If you do not use Apache, make sure nobody can access sally/ via HTTP!)</warning>');
+				file_put_contents($htaccess, $content);
+			}
+		}
+	}
+
 	public static function onPostPkgInstall(Event $event) {
 		$op   = $event->getOperation();
 		$pkg  = $op->getJobType() === 'install' ? $op->getPackage() : $op->getTargetPackage();
