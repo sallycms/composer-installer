@@ -12,7 +12,7 @@ namespace sly\Composer;
 
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
-use Composer\Script\Event;
+use Composer\Script\PackageEvent as Event;
 
 class Installer extends LibraryInstaller {
 	public static $supported = array('sallycms-addon', 'sallycms-asset', 'sallycms-app');
