@@ -12,7 +12,8 @@ namespace sly\Composer;
 
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
-use Composer\Script\PackageEvent as Event;
+use Composer\Script\Event;
+use Composer\Installer\PackageEvent;
 
 class Installer extends LibraryInstaller {
 	public static $supported = array('sallycms-addon', 'sallycms-asset', 'sallycms-app');
@@ -56,7 +57,7 @@ class Installer extends LibraryInstaller {
 		}
 	}
 
-	public static function onPostPkgInstall(Event $event) {
+	public static function onPostPkgInstall(PackageEvent $event) {
 		$op   = $event->getOperation();
 		$pkg  = $op->getJobType() === 'install' ? $op->getPackage() : $op->getTargetPackage();
 		$type = $pkg->getType();
